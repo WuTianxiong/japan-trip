@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>日本行程 Google Maps 导航版</title>
+<style>
+:root{
+  --bg:#fff8f0; --ink:#1f2937; --muted:#6b7280; --card:#ffffffdd;
+  --pink:#e94b7b; --green:#2f8f4e; --orange:#ed7a23; --blue:#2f78c8;
+  --purple:#7b4cc2; --rose:#df4768; --teal:#178fa3;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#fff8f0,#fff);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;color:var(--ink);line-height:1.55}
+header{position:sticky;top:0;z-index:10;background:rgba(255,248,240,.96);backdrop-filter:blur(10px);border-bottom:1px solid #f1dfcf}
+.hero{max-width:1180px;margin:0 auto;padding:22px 18px}
+h1{margin:0;font-size:34px;letter-spacing:.04em}
+.sub{color:var(--muted);margin-top:6px}
+.nav{display:flex;gap:8px;overflow:auto;padding:12px 18px 16px;max-width:1180px;margin:0 auto}
+.nav a{white-space:nowrap;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid #edd7c6;color:#374151;text-decoration:none;font-weight:700;font-size:14px}
+main{max-width:1180px;margin:0 auto;padding:18px}
+.notice{background:#fff;border:1px dashed #d6b99d;border-radius:18px;padding:14px 16px;margin-bottom:16px}
+.day{background:var(--card);border:1px solid #efd7c6;border-radius:24px;margin:18px 0;overflow:hidden;box-shadow:0 10px 30px rgba(31,41,55,.06)}
+.dayhead{padding:18px 20px;color:white;background:var(--accent);display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.dayhead h2{margin:0;font-size:26px}
+.route{font-weight:700;opacity:.95}
+.content{padding:18px 20px}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+@media(max-width:820px){.grid{grid-template-columns:1fr}.dayhead h2{font-size:22px}h1{font-size:28px}}
+.box{background:#fff;border:1px solid #eee0d4;border-radius:18px;padding:14px;margin-bottom:14px}
+.box h3{margin:0 0 10px;font-size:18px;color:var(--accent)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border-radius:999px;background:color-mix(in srgb,var(--accent) 12%,white);color:var(--accent);font-weight:800;padding:7px 11px}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;border-radius:12px;padding:8px 10px;font-weight:800;font-size:14px;border:1px solid transparent}
+.btn.map{background:color-mix(in srgb,var(--accent) 10%,white);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 30%,white)}
+.btn.routebtn{background:var(--accent);color:white}
+ol.steps, ul{margin:0;padding-left:20px}
+.steps li{margin:8px 0}
+.place{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #f2e7de}
+.place:last-child{border-bottom:none}
+.place strong{font-size:15px}
+.routes .routeitem{padding:10px 0;border-bottom:1px solid #f2e7de}
+.routes .routeitem:last-child{border-bottom:none}
+.small{color:var(--muted);font-size:13px}
+.footer{padding:28px 18px 48px;text-align:center;color:var(--muted)}
+.print{position:fixed;right:18px;bottom:18px;background:#111827;color:#fff;border:0;border-radius:999px;padding:12px 16px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.18);cursor:pointer}
+@media print{header,.print{display:none}.day{break-inside:avoid;box-shadow:none}body{background:#fff}main{padding:0}.day{margin:10px 0}}
+.pink{--accent:var(--pink)}.green{--accent:var(--green)}.orange{--accent:var(--orange)}.blue{--accent:var(--blue)}.purple{--accent:var(--purple)}.rose{--accent:var(--rose)}.teal{--accent:var(--teal)}
+</style>
+</head>
+<body>
+<header>
+  <div class="hero">
+    <h1>日本行程 Google Maps 导航版</h1>
+    <div class="sub">5月2日 - 5月8日｜地点收藏、每日路线、推荐景点一页打开</div>
+  </div>
+  <nav class="nav"><a href="#day1">5月2日 东京到达日</a><a href="#day2">5月3日 河口湖 / 富士山</a><a href="#day3">5月4日 河口湖 → 箱根（中强罗）</a><a href="#day4">5月5日 小田原放行李后当天往返</a><a href="#day5">5月6日 小田原 → 东京银座</a><a href="#day6">5月7日 东京购物游玩日</a><a href="#day7">5月8日 东京返程日</a></nav>
+</header>
+<main>
+  <div class="notice">
+    <strong>使用方法：</strong>先点“打开地图”把住宿、车站、景点保存到 Google Maps 清单；每天出发前点“路线规划”，交通方式选择公共交通，并设置对应日期和时间。实际班次、站台、营业状态以当天 Google Maps/JR/现场显示为准。
+  </div>
+  
+    <section id="day1" class="day pink">
+      <div class="dayhead">
+        <div>
+          <h2>DAY 1｜5月2日｜东京到达日</h2>
+          <div class="route">羽田机场 → 高田马场住宿 → 新宿</div>
+        </div>
+        <div class="small" style="color:white;opacity:.9">点击按钮可跳转 Google Maps</div>
+      </div>
+      <div class="content">
+        <div class="grid">
+          <div>
+            <div class="box">
+              <h3>天气与今日重点</h3>
+              <p>东京：晴转多云，15-27°C。晚上舒适，适合轻松逛街。</p>
+              <div class="chips"><span class="chip">入住安顿</span><span class="chip">新宿晚餐</span><span class="chip">购物补给</span></div>
+            </div>
+            <div class="box">
+              <h3>怎么玩</h3>
+              <ul><li>新宿站周边晚餐</li><li>药妆/便利店补给</li><li>歌舞伎町外围逛街</li><li>熟悉明天新宿站路线</li></ul>
+            </div>
+            <div class="box">
+              <h3>小贴士</h3>
+              <ul><li>第一晚不要安排太晚</li><li>新宿站较大，提前熟悉更省心</li><li>可以买零食、水、防晒和雨伞</li></ul>
+            </div>
+          </div>
+          <div>
+            <div class="box routes">
+              <h3>路线规划</h3>
+              
+        <div class="routeitem">
+          <strong>羽田机场 → 高田马场住宿</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Haneda+Airport&amp;destination=1+Chome-18-24+Takadanobaba%2C+Shinjuku-ku%2C+Tokyo+169-0075&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Haneda+Airport" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=1+Chome-18-24+Takadanobaba%2C+Shinjuku-ku%2C+Tokyo+169-0075" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>高田马场住宿 → 新宿站</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=1+Chome-18-24+Takadanobaba%2C+Shinjuku-ku%2C+Tokyo+169-0075&amp;destination=Shinjuku+Station&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=1+Chome-18-24+Takadanobaba%2C+Shinjuku-ku%2C+Tokyo+169-0075" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Shinjuku+Station" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+            </div>
+            <div class="box">
+              <h3>地点与推荐</h3>
+              
+        <div class="place">
+          <strong>羽田机场</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Haneda+Airport" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>高田马场住宿</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=1+Chome-18-24+Takadanobaba%2C+Shinjuku-ku%2C+Tokyo+169-0075" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>新宿站</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Shinjuku+Station" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>歌舞伎町外围</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Kabukicho+Shinjuku+Tokyo" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>思出横丁</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Omoide+Yokocho+Shinjuku" target="_blank" rel="noopener">打开地图</a>
+        </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="day2" class="day green">
+      <div class="dayhead">
+        <div>
+          <h2>DAY 2｜5月3日｜河口湖 / 富士山</h2>
+          <div class="route">高田马场 → 新宿站 → 富士回游号9:30 → 河口湖</div>
+        </div>
+        <div class="small" style="color:white;opacity:.9">点击按钮可跳转 Google Maps</div>
+      </div>
+      <div class="content">
+        <div class="grid">
+          <div>
+            <div class="box">
+              <h3>天气与今日重点</h3>
+              <p>河口湖：多云，下午可能阵雨，13-20°C。上午更适合看富士山。</p>
+              <div class="chips"><span class="chip">看富士山</span><span class="chip">河口湖散步</span><span class="chip">缆车可选</span></div>
+            </div>
+            <div class="box">
+              <h3>怎么玩</h3>
+              <ul><li>大石公园</li><li>河口湖自然生活馆</li><li>河口湖北岸拍富士山</li><li>天气好可加富士山全景缆车</li></ul>
+            </div>
+            <div class="box">
+              <h3>小贴士</h3>
+              <ul><li>8:30-8:45 到新宿站</li><li>富士回游号建议提前预约指定席</li><li>下午下雨就改为站周边和室内</li></ul>
+            </div>
+          </div>
+          <div>
+            <div class="box routes">
+              <h3>路线规划</h3>
+              
+        <div class="routeitem">
+          <strong>高田马场住宿 → 新宿站</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=1+Chome-18-24+Takadanobaba%2C+Shinjuku-ku%2C+Tokyo+169-0075&amp;destination=Shinjuku+Station&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=1+Chome-18-24+Takadanobaba%2C+Shinjuku-ku%2C+Tokyo+169-0075" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Shinjuku+Station" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>新宿站 → 河口湖站</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Shinjuku+Station&amp;destination=Kawaguchiko+Station&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Shinjuku+Station" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Kawaguchiko+Station" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>河口湖站 → 河口湖住宿</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Kawaguchiko+Station&amp;destination=3148-13+Funatsu%2C+Fujikawaguchiko%2C+Yamanashi+401-0301&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Kawaguchiko+Station" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=3148-13+Funatsu%2C+Fujikawaguchiko%2C+Yamanashi+401-0301" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+            </div>
+            <div class="box">
+              <h3>地点与推荐</h3>
+              
+        <div class="place">
+          <strong>新宿站</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Shinjuku+Station" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>河口湖站</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Kawaguchiko+Station" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>河口湖住宿</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=3148-13+Funatsu%2C+Fujikawaguchiko%2C+Yamanashi+401-0301" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>大石公园</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Oishi+Park+Fujikawaguchiko" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>河口湖自然生活馆</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Kawaguchiko+Natural+Living+Center" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>富士山全景缆车</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Mt.+Fuji+Panoramic+Ropeway" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>河口湖北岸</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Kawaguchiko+North+Shore" target="_blank" rel="noopener">打开地图</a>
+        </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="day3" class="day orange">
+      <div class="dayhead">
+        <div>
+          <h2>DAY 3｜5月4日｜河口湖 → 箱根（中强罗）</h2>
+          <div class="route">河口湖站 → 御殿场 → 箱根方向交通 → 中强罗</div>
+        </div>
+        <div class="small" style="color:white;opacity:.9">点击按钮可跳转 Google Maps</div>
+      </div>
+      <div class="content">
+        <div class="grid">
+          <div>
+            <div class="box">
+              <h3>天气与今日重点</h3>
+              <p>河口湖/箱根：上午有雨，山区偏凉。今天以交通转移为主。</p>
+              <div class="chips"><span class="chip">顺利换乘</span><span class="chip">入住箱根</span><span class="chip">轻松泡汤</span></div>
+            </div>
+            <div class="box">
+              <h3>怎么玩</h3>
+              <ul><li>强罗站周边</li><li>中强罗住宿附近</li><li>箱根强罗公园（视时间）</li><li>日归温泉</li></ul>
+            </div>
+            <div class="box">
+              <h3>小贴士</h3>
+              <ul><li>这天换乘复杂，建议分两段查</li><li>尽量15:00前到住宿附近</li><li>晚到可能需要打车</li></ul>
+            </div>
+          </div>
+          <div>
+            <div class="box routes">
+              <h3>路线规划</h3>
+              
+        <div class="routeitem">
+          <strong>河口湖站 → 御殿场站</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Kawaguchiko+Station&amp;destination=Gotemba+Station&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Kawaguchiko+Station" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Gotemba+Station" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>御殿场站 → 中强罗站</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Gotemba+Station&amp;destination=Naka-Gora+Station+Hakone&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Gotemba+Station" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Naka-Gora+Station+Hakone" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>中强罗站 → 箱根住宿附近</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Naka-Gora+Station+Hakone&amp;destination=Gora+Hakone+Kanagawa&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Naka-Gora+Station+Hakone" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Gora+Hakone+Kanagawa" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+            </div>
+            <div class="box">
+              <h3>地点与推荐</h3>
+              
+        <div class="place">
+          <strong>河口湖站</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Kawaguchiko+Station" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>御殿场站</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Gotemba+Station" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>中强罗站</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Naka-Gora+Station+Hakone" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>强罗站</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Gora+Station+Hakone" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>箱根强罗公园</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Hakone+Gora+Park" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>Hakone Yutowa 日归温泉</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Hakone+Yutowa" target="_blank" rel="noopener">打开地图</a>
+        </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="day4" class="day blue">
+      <div class="dayhead">
+        <div>
+          <h2>DAY 4｜5月5日｜小田原放行李后当天往返</h2>
+          <div class="route">箱根 → 小田原放行李 → 镰仓（推荐）或伊豆大室山 → 回小田原</div>
+        </div>
+        <div class="small" style="color:white;opacity:.9">点击按钮可跳转 Google Maps</div>
+      </div>
+      <div class="content">
+        <div class="grid">
+          <div>
+            <div class="box">
+              <h3>天气与今日重点</h3>
+              <p>小田原/镰仓/伊豆：晴到多云，约13-21°C。很适合轻装一日游。</p>
+              <div class="chips"><span class="chip">先放行李</span><span class="chip">轻装出发</span><span class="chip">晚上回小田原</span></div>
+            </div>
+            <div class="box">
+              <h3>怎么玩</h3>
+              <ul><li>方案A：镰仓更推荐</li><li>小町通/鹤冈八幡宫</li><li>长谷寺/镰仓大佛</li><li>方案B：伊豆大室山，风景好但更远</li></ul>
+            </div>
+            <div class="box">
+              <h3>小贴士</h3>
+              <ul><li>Ryokan Plum 可10:00-16:00寄存行李</li><li>镰仓更顺路、回程更稳</li><li>若选伊豆，大室山建议16:00前返程</li></ul>
+            </div>
+          </div>
+          <div>
+            <div class="box routes">
+              <h3>路线规划</h3>
+              
+        <div class="routeitem">
+          <strong>中强罗 → Ryokan Plum</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Naka-Gora+Station+Hakone&amp;destination=Ryokan+Plum+Odawara&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Naka-Gora+Station+Hakone" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Ryokan+Plum+Odawara" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>小田原 → 镰仓</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Odawara+Station&amp;destination=Kamakura+Station&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Odawara+Station" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Kamakura+Station" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>镰仓 → 小田原</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Kamakura+Station&amp;destination=Odawara+Station&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Kamakura+Station" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Odawara+Station" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>小田原 → 大室山</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Odawara+Station&amp;destination=Mount+Omuro&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Odawara+Station" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Mount+Omuro" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>大室山 → 小田原</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Mount+Omuro&amp;destination=Odawara+Station&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Mount+Omuro" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Odawara+Station" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+            </div>
+            <div class="box">
+              <h3>地点与推荐</h3>
+              
+        <div class="place">
+          <strong>Ryokan Plum</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Ryokan+Plum+Odawara" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>小田原站</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Odawara+Station" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>小田原城</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Odawara+Castle" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>镰仓站</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Kamakura+Station" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>小町通</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Komachi-dori+Street+Kamakura" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>鹤冈八幡宫</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Tsurugaoka+Hachimangu+Kamakura" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>长谷寺</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Hasedera+Temple+Kamakura" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>镰仓大佛</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Kamakura+Daibutsu" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>镰仓高校前</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Kamakurakokomae+Station" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>大室山</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Mount+Omuro" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>伊豆高原站</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Izu-Kogen+Station" target="_blank" rel="noopener">打开地图</a>
+        </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="day5" class="day purple">
+      <div class="dayhead">
+        <div>
+          <h2>DAY 5｜5月6日｜小田原 → 东京银座</h2>
+          <div class="route">小田原 → 东京/新桥 → 银座酒店</div>
+        </div>
+        <div class="small" style="color:white;opacity:.9">点击按钮可跳转 Google Maps</div>
+      </div>
+      <div class="content">
+        <div class="grid">
+          <div>
+            <div class="box">
+              <h3>天气与今日重点</h3>
+              <p>小田原/东京：多云，约14-23°C。适合回东京后开始购物。</p>
+              <div class="chips"><span class="chip">小田原轻松逛</span><span class="chip">前往东京</span><span class="chip">银座购物</span></div>
+            </div>
+            <div class="box">
+              <h3>怎么玩</h3>
+              <ul><li>小田原城</li><li>银座四丁目</li><li>GINZA SIX</li><li>银座三越/松屋/优衣库</li></ul>
+            </div>
+            <div class="box">
+              <h3>小贴士</h3>
+              <ul><li>行李多建议新干线+打车</li><li>今天不必排太满</li><li>银座百货集中，适合慢慢逛</li></ul>
+            </div>
+          </div>
+          <div>
+            <div class="box routes">
+              <h3>路线规划</h3>
+              
+        <div class="routeitem">
+          <strong>Ryokan Plum → 小田原站</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Ryokan+Plum+Odawara&amp;destination=Odawara+Station&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Ryokan+Plum+Odawara" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Odawara+Station" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>小田原站 → 东京银座酒店</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Odawara+Station&amp;destination=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Odawara+Station" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+            </div>
+            <div class="box">
+              <h3>地点与推荐</h3>
+              
+        <div class="place">
+          <strong>Ryokan Plum</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Ryokan+Plum+Odawara" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>小田原城</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Odawara+Castle" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>东京银座千禧 三井花园酒店</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>银座四丁目</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Ginza+4-chome+Crossing" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>GINZA SIX</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=GINZA+SIX+Tokyo" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>银座三越</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Ginza+Mitsukoshi" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>松屋银座</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Matsuya+Ginza" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>优衣库银座旗舰店</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=UNIQLO+Ginza" target="_blank" rel="noopener">打开地图</a>
+        </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="day6" class="day rose">
+      <div class="dayhead">
+        <div>
+          <h2>DAY 6｜5月7日｜东京购物游玩日</h2>
+          <div class="route">银座酒店 → 银座 → 涩谷/表参道 或 新宿 → 回酒店</div>
+        </div>
+        <div class="small" style="color:white;opacity:.9">点击按钮可跳转 Google Maps</div>
+      </div>
+      <div class="content">
+        <div class="grid">
+          <div>
+            <div class="box">
+              <h3>天气与今日重点</h3>
+              <p>东京：部分晴，约16-25°C。适合东京购物和市区游玩。</p>
+              <div class="chips"><span class="chip">银座购物</span><span class="chip">市区逛街</span><span class="chip">整理行李</span></div>
+            </div>
+            <div class="box">
+              <h3>怎么玩</h3>
+              <ul><li>上午银座百货/优衣库/药妆</li><li>东京站伴手礼</li><li>下午涩谷/表参道或新宿二选一</li><li>晚上整理行李</li></ul>
+            </div>
+            <div class="box">
+              <h3>小贴士</h3>
+              <ul><li>下午只选一个大商圈，避免太赶</li><li>集中采购伴手礼和衣物</li><li>预留明早去羽田机场时间</li></ul>
+            </div>
+          </div>
+          <div>
+            <div class="box routes">
+              <h3>路线规划</h3>
+              
+        <div class="routeitem">
+          <strong>银座酒店 → 涩谷</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza&amp;destination=Shibuya+Station&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Shibuya+Station" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>银座酒店 → 表参道</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza&amp;destination=Omotesando+Station&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Omotesando+Station" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>银座酒店 → 新宿</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza&amp;destination=Shinjuku+Station&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Shinjuku+Station" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>新宿 → 银座酒店</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Shinjuku+Station&amp;destination=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Shinjuku+Station" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+            </div>
+            <div class="box">
+              <h3>地点与推荐</h3>
+              
+        <div class="place">
+          <strong>GINZA SIX</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=GINZA+SIX+Tokyo" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>银座三越</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Ginza+Mitsukoshi" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>东京站一番街</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Tokyo+Station+Ichibangai" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>涩谷 Scramble Crossing</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Shibuya+Scramble+Crossing" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>Shibuya PARCO</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Shibuya+PARCO" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>表参道</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Omotesando+Station" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>新宿伊势丹</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Isetan+Shinjuku" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>BicCamera 新宿</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=BicCamera+Shinjuku" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>唐吉诃德新宿</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Don+Quijote+Shinjuku" target="_blank" rel="noopener">打开地图</a>
+        </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="day7" class="day teal">
+      <div class="dayhead">
+        <div>
+          <h2>DAY 7｜5月8日｜东京返程日</h2>
+          <div class="route">银座酒店 → 东银座站 → 羽田机场</div>
+        </div>
+        <div class="small" style="color:white;opacity:.9">点击按钮可跳转 Google Maps</div>
+      </div>
+      <div class="content">
+        <div class="grid">
+          <div>
+            <div class="box">
+              <h3>天气与今日重点</h3>
+              <p>东京：多云，早晨出发影响不大。今天以顺利返程为主。</p>
+              <div class="chips"><span class="chip">早起出发</span><span class="chip">准时到机场</span><span class="chip">顺利返程</span></div>
+            </div>
+            <div class="box">
+              <h3>怎么玩</h3>
+              <ul><li>05:00-05:20 从酒店出发</li><li>步行到东银座站</li><li>都营浅草线/京急直通</li><li>建议06:00左右到机场</li><li>08:00航班起飞</li></ul>
+            </div>
+            <div class="box">
+              <h3>小贴士</h3>
+              <ul><li>确认航站楼</li><li>提前检查护照和证件</li><li>行李多可直接打车去羽田</li></ul>
+            </div>
+          </div>
+          <div>
+            <div class="box routes">
+              <h3>路线规划</h3>
+              
+        <div class="routeitem">
+          <strong>银座酒店 → 羽田机场</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza&amp;destination=Haneda+Airport&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Haneda+Airport" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+        <div class="routeitem">
+          <strong>银座酒店 → 羽田机场第3航站楼</strong>
+          <div class="btns" style="margin-top:8px">
+            <a class="btn routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza&amp;destination=Haneda+Airport+Terminal+3&amp;travelmode=transit" target="_blank" rel="noopener">路线规划</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza" target="_blank" rel="noopener">看起点</a>
+            <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Haneda+Airport+Terminal+3" target="_blank" rel="noopener">看终点</a>
+          </div>
+        </div>
+            </div>
+            <div class="box">
+              <h3>地点与推荐</h3>
+              
+        <div class="place">
+          <strong>东京银座千禧 三井花园酒店</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Millennium+Mitsui+Garden+Hotel+Tokyo+Ginza" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>东银座站</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Higashi-ginza+Station" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>羽田机场</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Haneda+Airport" target="_blank" rel="noopener">打开地图</a>
+        </div>
+        <div class="place">
+          <strong>羽田机场第3航站楼</strong>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&amp;query=Haneda+Airport+Terminal+3" target="_blank" rel="noopener">打开地图</a>
+        </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+</main>
+<button class="print" onclick="window.print()">打印 / 存成PDF</button>
+<div class="footer">建议提前一天晚上截图第二天路线，尤其是 5/4 河口湖→箱根、5/8 银座→羽田机场。</div>
+</body>
+</html>
